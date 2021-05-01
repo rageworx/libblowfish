@@ -9,3 +9,8 @@ The Blowfish encryption library for C++ library
 ## Copyright
 * Blowfish : Bruce Schneier
 * Form C code.
+
+## Supporting
+* MacOS, Xcode up to Big Sur ( universal binary )
+* Linux, all architecture
+* MSYS2/MinGW-W64
