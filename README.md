@@ -1,5 +1,5 @@
 # libblowfish
-The Blowfish encryption library for C++ library
+The Blowfish encryption for C++ library
 
 ## Inspiration
 * Found old but effectible for encrypting packet headers fastest way.
