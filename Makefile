@@ -19,6 +19,18 @@ TOBJS = $(TSRCS:$(DIRTEST)/%.cpp=$(DIROBJ)/%.o)
 
 CFLAGS += -I$(DIRSRC)
 LFLAGS += -L$(DIRLIB) -lblowfish
+LAOPT  =
+
+# automatic architecture sensing.
+KRNL := $(shell uname -s)
+KVER := $(shell uname -r | cut -d . -f1) 
+ARCH := $(shell uname -m)
+
+ifeq ($(KRNL),Darwin)
+	ifeq ($(shell test $(KVER) -gt 19; echo $$?),0)
+		LAOPT += -arch x86_64 -arch arm64
+	endif
+endif
 
 .PHONY:	prepare clean
 
@@ -38,10 +50,10 @@ clean:
 	@rm -rf $(DIRBIN)/test
 
 $(LOBJS): $(DIROBJ)/%.o: $(DIRSRC)/%.cpp
-	@$(CXX) $(CFLAGS) -c $< -o $@
+	@$(CXX) $(CFLAGS) $(LAOPT) -c $< -o $@
 
 $(TOBJS): $(DIROBJ)/%.o: $(DIRTEST)/%.cpp
-	@$(CXX) -I$(DIRLIB) -c $< -o $@
+	@$(CXX) -I$(DIRLIB) $(LAOPT) -c $< -o $@
 
 $(TARGET): $(LOBJS)
 	@$(AR) -cr $@ $^
