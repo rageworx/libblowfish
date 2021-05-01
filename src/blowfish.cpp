@@ -42,7 +42,8 @@ union dunion
 
 BlowFish::BlowFish()
  : pdata(NULL),
-   sbdata(NULL)
+   sbdata(NULL),
+   inited(false)
 {
     pdata = new uint32_t[18] ;
     sbdata = new uint32_t[BF_S_SZ];
@@ -96,6 +97,15 @@ void BlowFish::decipher( uint32_t* xl, uint32_t* xr )
 
 void BlowFish::Initialize( uint8_t* key, size_t keylen )
 {
+    if ( ( key == NULL ) || ( keylen == 0 ) )
+    {
+        inited = false;
+        return;
+    }
+    
+    if ( keylen > MAXKEYLENGTH )
+        keylen = MAXKEYLENGTH;
+
     for ( size_t cnt=0; cnt<18; cnt++ )
         pdata[cnt] = bf_P[cnt];
 
@@ -107,7 +117,7 @@ void BlowFish::Initialize( uint8_t* key, size_t keylen )
         }
     }
 
-    dunion    temp = {0};
+    dunion   temp = {0};
     size_t   tcol = 0;
     uint32_t data = 0;
     
