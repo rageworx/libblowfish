@@ -27,9 +27,15 @@ KVER := $(shell uname -r | cut -d . -f1)
 ARCH := $(shell uname -m)
 
 ifeq ($(KRNL),Darwin)
+	# MacOSX using llvm-g++
 	CXX = llvm-g++
 	ifeq ($(shell test $(KVER) -gt 19; echo $$?),0)
 		LAOPT += -arch x86_64 -arch arm64
+	endif
+else
+	STRIPKRNL = $(shell echo $(KRNL) | cut -d . -f1)
+	ifeq ($(STRIPKRNL),MINGW64_NT-10)
+		LAOPT += -s -static
 	endif
 endif
 
@@ -63,4 +69,4 @@ $(TARGET): $(LOBJS)
 
 $(DIRBIN)/test: $(TOBJS) $(TARGET)
 	@echo "Building test ..."
-	@$(CXX) -I$(DIRLIB) $(LFLAGS) $< -o $@
+	@$(CXX) -I$(DIRLIB) $< $(LFLAGS) $(LAOPT) -o $@
