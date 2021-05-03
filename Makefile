@@ -1,4 +1,4 @@
-CXX = llvm-g++
+CXX = g++
 AR  = ar
 RL  = ranlib
 CP  = cp -r
@@ -27,6 +27,7 @@ KVER := $(shell uname -r | cut -d . -f1)
 ARCH := $(shell uname -m)
 
 ifeq ($(KRNL),Darwin)
+	CXX = llvm-g++
 	ifeq ($(shell test $(KVER) -gt 19; echo $$?),0)
 		LAOPT += -arch x86_64 -arch arm64
 	endif
