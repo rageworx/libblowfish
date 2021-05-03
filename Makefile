@@ -36,6 +36,9 @@ else
 	STRIPKRNL = $(shell echo $(KRNL) | cut -d . -f1)
 	ifeq ($(STRIPKRNL),MINGW64_NT-10)
 		LAOPT += -s -static
+	else
+		CFLAGS += -std=c++11
+		LAOPT += -s
 	endif
 endif
 
