@@ -42,6 +42,9 @@ else
 	endif
 endif
 
+# Let give some speed optimize at code generation.
+CFLAGS += -Os
+
 .PHONY:	prepare clean
 
 all: prepare $(TARGET)
