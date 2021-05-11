@@ -33,8 +33,8 @@ ifeq ($(KRNL),Darwin)
 		LAOPT += -arch x86_64 -arch arm64
 	endif
 else
-	STRIPKRNL = $(shell echo $(KRNL) | cut -d . -f1)
-	ifeq ($(STRIPKRNL),MINGW64_NT-10)
+	STRIPKRNL = $(shell echo $(KRNL) | cut -d _ -f1)
+	ifeq ($(STRIPKRNL),MINGW64)
 		LAOPT += -s -static
 	else
 		CFLAGS += -std=c++11
