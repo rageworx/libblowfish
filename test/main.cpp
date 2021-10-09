@@ -53,6 +53,8 @@ int main( int argc, char* argv[] )
         return -1;
     }
 
+    printf( "source %lu bytes  : ", strlen(testString) );
+    prtHex( (const uint8_t*)testString, strlen(testString) );
     printf( "encoded %lu bytes : ", encsz );
     prtHex( testOutEnc, encsz );
 
